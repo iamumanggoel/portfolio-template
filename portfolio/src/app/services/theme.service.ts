@@ -1,5 +1,6 @@
 import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { AppTheme, ThemeType, Theme } from '../models/theme.model';
+import { LocalStorageService, StorageKeys } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,11 @@ export class ThemeService {
     { name: Theme.System, icon: 'desktop_windows' },
   ];
   
-
-  appTheme = signal<ThemeType>(Theme.System); 
+  storage = inject(LocalStorageService);
+  appTheme = signal<{ name: ThemeType}>(this.storage.get<{ name: ThemeType}>(StorageKeys.THEME) ?? {name: Theme.Light});  
 
   selectedTheme = computed(() => {
-    return this.themes.find(theme => theme.name === this.appTheme());
+    return this.themes.find(theme => theme.name === this.appTheme()?.name);
   });
 
   constructor() { }
@@ -26,12 +27,15 @@ export class ThemeService {
   }
 
   setTheme(theme: ThemeType){
-    this.appTheme.set(theme);
+    this.appTheme.set({name: theme});
   }
 
+  saveLocalStorage = effect(() => {
+    this.storage.set<{name: ThemeType}>(StorageKeys.THEME, this.appTheme());
+  });
   
   addThemeClass = effect(() => {
-    const currentTheme = this.appTheme();
+    const currentTheme = this.appTheme()?.name;
     
     document.body.classList.remove(Theme.Dark, Theme.Light);
 

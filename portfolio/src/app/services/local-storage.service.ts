@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 
 export enum StorageKeys {
-  RECENT_SEARCHES = 'recentSearches'
+  RECENT_SEARCHES = 'recentSearches',
+  THEME = 'theme'
 }
 
 @Injectable({
