@@ -41,10 +41,16 @@ import { TitleCasePipe } from '@angular/common';
     </mat-toolbar>
   `,
   styles: `
+    @use '@angular/material' as mat;
     mat-toolbar{
       position: relative;
       z-index: 5;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: var(--mat-sys-level2);
+
+      // @include mat.toolbar-overrides((
+      //   container-background-color: var(mat-sys-inverse-surface),
+      //   container-text-color: var(mat-sys-on-inverse-surface),
+      // ));
       
       > span {
         cursor: pointer;

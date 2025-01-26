@@ -28,4 +28,39 @@ export class ThemeService {
   setTheme(theme: ThemeType){
     this.appTheme.set(theme);
   }
+
+  
+  addThemeClass = effect(() => {
+    const currentTheme = this.appTheme();
+    
+    document.body.classList.remove(Theme.Dark, Theme.Light);
+
+    switch (currentTheme) {
+      case Theme.System:
+        document.body.style.colorScheme = `${Theme.Light} ${Theme.Dark}`; 
+        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (prefersDarkScheme) {
+          document.body.classList.add(Theme.Dark);
+        } else {
+          document.body.classList.add(Theme.Light);
+        }
+        break;
+
+      case Theme.Dark:
+        document.body.style.colorScheme = Theme.Dark;  
+
+        document.body.classList.add(Theme.Dark);
+        break;
+
+      case Theme.Light:
+        document.body.style.colorScheme = Theme.Light; 
+
+        document.body.classList.add(Theme.Light);
+        break;
+
+      default:
+        console.warn('Unexpected theme value:', currentTheme);
+        break;
+    }
+  })
 }

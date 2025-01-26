@@ -26,9 +26,10 @@ import { SearchBarService } from '../../services/search-bar.service';
   `,
   styles: `
     .overlay-container{
-      box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2); 
+      box-shadow: var(--mat-sys-level2); 
       min-width: 429px;
-      background: white;
+      background: var(--mat-sys-outline-variant);
+      color: var(--mat-sys-on-surface);
       padding: 16px;
       border-radius: 0 0 32px 32px;
     }

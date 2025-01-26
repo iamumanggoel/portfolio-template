@@ -47,7 +47,8 @@ import { SearchOverlayComponent } from './search-overlay.component';
     }
     .search-bar-container{
       padding: 0px 56px 0px 8px;
-      background: #eaf1fb;
+      background: var(--mat-sys-outline-variant);
+      color: var(--mat-sys-on-surface);
       border-radius: 32px;
       display: flex;
       align-items: center;
@@ -61,9 +62,9 @@ import { SearchOverlayComponent } from './search-overlay.component';
         min-width: 352px;
       }
       &.opened{
-        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
-        background: white;
-        border-radius: 32px 32px 0 0;
+        box-shadow: var(--mat-sys-level2);
+        //background: white;
+        border-radius: 20px 20px 0 0;
       }
 
       .close-btn{
