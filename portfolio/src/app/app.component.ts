@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CustomSidenavComponent } from "./components/custom-sidenav.component";
+import { CustomSearchBarComponent } from './components/custom-search-bar.component';
 
 @Component({
   selector: 'app-root',
@@ -15,12 +16,14 @@ import { CustomSidenavComponent } from "./components/custom-sidenav.component";
     MatIconModule,
     MatSidenavModule,
     CustomSidenavComponent,
+    CustomSearchBarComponent,
 ],
   template: `
     <mat-toolbar>
       <button mat-icon-button (click)="collapsed.set(!collapsed())">
         <mat-icon>menu</mat-icon>
       </button>
+      <app-custom-search-bar />
     </mat-toolbar>
       
     <mat-sidenav-container>

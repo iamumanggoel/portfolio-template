@@ -1,0 +1,90 @@
+import { Component, inject } from '@angular/core';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { SearchBarService } from '../services/search-bar.service';
+import { SearchOverlayComponent } from "./search-overlay.component";
+import { NgClass } from '@angular/common';
+
+@Component({
+  selector: 'app-custom-search-bar',
+  imports: [MatIconButton, MatIcon, OverlayModule, SearchOverlayComponent, NgClass],
+  template: `
+    <div class="search-bar-container" 
+      cdkOverlayOrigin 
+      #overlayPosition="cdkOverlayOrigin"
+      [ngClass]="{ 'opened': overlayOpen() }">
+      <button mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
+      <input #searchInput placeholder="Search..." 
+        [value]="searchBarService.searchTerm()"
+        (click)="overlayOpen.set(true)"
+        (keydown.ENTER)="search(searchInput.value)"
+      />
+
+      @if(searchBarService.searchTerm()){
+        <button mat-icon-button class="close-btn" (click)="clearSearch()">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </div>
+
+    <ng-template 
+      cdkConnectedOverlay 
+      [cdkConnectedOverlayOrigin]="overlayPosition"
+      [cdkConnectedOverlayOpen]="overlayOpen()"
+      (overlayOutsideClick)="overlayOpen.set(false)">
+      <app-search-overlay />
+    </ng-template>
+    
+  `,
+  styles: `
+
+    :host{
+      display: block;
+    }
+    .search-bar-container{
+      padding: 0px 56px 0px 8px;
+      background: #eaf1fb;
+      border-radius: 32px;
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      > input{
+        font-size: 1rem;
+        border: none;
+        outline: none;
+        background: inherit;
+        min-width: 352px;
+      }
+      &.opened{
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+        background: white;
+        border-radius: 32px 32px 0 0;
+      }
+
+      .close-btn{
+        position: absolute;
+        right: 8px;
+        top: 0;
+      }
+    }
+  
+  `
+})
+export class CustomSearchBarComponent {
+  
+  searchBarService = inject(SearchBarService);
+  overlayOpen = this.searchBarService.overlayOpen;
+
+  search(searchTerm: string){
+    if(!searchTerm) return;
+    this.searchBarService.search(searchTerm);
+  }
+
+  clearSearch(){
+    this.searchBarService.clearSearch();
+  }
+}
