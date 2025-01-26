@@ -4,7 +4,7 @@ export const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: '/projects'
+        redirectTo: '/about'
     },
     {
         path: 'about',

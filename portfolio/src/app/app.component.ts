@@ -1,47 +1,33 @@
-import { Component, computed, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CustomSidenavComponent } from "./components/custom-sidenav.component";
-import { CustomSearchBarComponent } from './components/custom-search-bar.component';
+import { SideNavService } from './services/side-nav.service';
+import { HeaderComponent } from './components/header/header.component';
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
     MatSidenavModule,
     CustomSidenavComponent,
-    CustomSearchBarComponent,
+    HeaderComponent,
 ],
   template: `
-    <mat-toolbar>
-      <button mat-icon-button (click)="collapsed.set(!collapsed())">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <app-custom-search-bar />
-    </mat-toolbar>
-      
+    <app-header />
     <mat-sidenav-container>
-      <mat-sidenav opened mode="side" [style.width]="sidenavWidth()">
-        <app-custom-sidenav [collapsed]="collapsed()" />
+      <mat-sidenav opened mode="side" [style.width]="sidenavService.sidenavWidth()">
+        <app-custom-sidenav />
       </mat-sidenav>
-      <mat-sidenav-content class="content" [style.margin-left]="sidenavWidth()">
+      <mat-sidenav-content class="content" [style.margin-left]="sidenavService.sidenavWidth()">
         <router-outlet />
       </mat-sidenav-content>
     </mat-sidenav-container>   
   `,
   styles: [`
-    mat-toolbar{
-      position: relative;
-      z-index: 5;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-
-    }
     .content{
       padding: 24px;
     }
@@ -56,7 +42,5 @@ import { CustomSearchBarComponent } from './components/custom-search-bar.compone
   `],
 })
 export class AppComponent {
-  collapsed = signal<boolean>(false);
-
-  sidenavWidth = computed(() => this.collapsed() ? '65px' : '250px');
+  sidenavService = inject(SideNavService);
 }

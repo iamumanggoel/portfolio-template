@@ -2,9 +2,9 @@ import { Component, inject } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { SearchBarService } from '../services/search-bar.service';
-import { SearchOverlayComponent } from "./search-overlay.component";
 import { NgClass } from '@angular/common';
+import { SearchBarService } from '../../services/search-bar.service';
+import { SearchOverlayComponent } from './search-overlay.component';
 
 @Component({
   selector: 'app-custom-search-bar',
@@ -21,6 +21,7 @@ import { NgClass } from '@angular/common';
         [value]="searchBarService.searchTerm()"
         (click)="overlayOpen.set(true)"
         (keydown.ENTER)="search(searchInput.value)"
+        [maxLength]="25"
       />
 
       @if(searchBarService.searchTerm()){

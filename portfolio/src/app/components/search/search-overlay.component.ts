@@ -1,9 +1,9 @@
 import { Component, computed, inject } from '@angular/core';
 import { MatDivider } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
-import { SearchBarService } from '../services/search-bar.service';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { SearchBarService } from '../../services/search-bar.service';
 
 @Component({
   selector: 'app-search-overlay',

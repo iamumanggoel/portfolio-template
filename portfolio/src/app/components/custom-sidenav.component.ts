@@ -1,14 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal, input, computed } from '@angular/core';
+import { Component, signal, input, computed, inject } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { SideNavService } from '../services/side-nav.service';
 
-export type MenuItem = {
-  icon: string;
-  label: string;
-  route: string;
-}
 @Component({
   selector: 'app-custom-sidenav',
   imports: [CommonModule, MatListModule, MatIconModule, RouterModule],
@@ -19,30 +15,32 @@ export type MenuItem = {
         [height]="profilePicSize()" 
         src="/images/profile_pic.jpeg" 
         alt="profile">
-      <div class="header-text" [class.hide-header-text]="collapsed()">
+      <div class="header-text" [class.hide-header-text]="sidenavService.collapsed()">
         <h2>Umang Goel</h2>
         <p>Fullstack Developer</p>
       </div>
     </div>
 
     <mat-nav-list>
-      <a 
-      mat-list-item 
-      class="menu-item"
-      *ngFor="let item of menuItems()" 
-      [routerLink]="item.route" 
-      routerLinkActive="selected-menu-item"
-      #rla="routerLinkActive" 
-      [activated]="rla.isActive">
+      @for (item of sidenavService.menuItems(); track item?.label){
+        <a 
+        mat-list-item 
+        class="menu-item"
+        [routerLink]="item.route" 
+        routerLinkActive="selected-menu-item"
+        #rla="routerLinkActive" 
+        [activated]="rla.isActive">
 
-        <mat-icon 
-          [fontSet]="rla.isActive ?
-           'material-icons': 'material-icons-outlined'"
-          matListItemIcon>
-           {{item.icon}}
-        </mat-icon>
-        <span matListItemTitle *ngIf="!collapsed()">{{item.label}}</span>
-      </a>
+          <mat-icon 
+            [fontSet]="rla.isActive ?
+            'material-icons': 'material-icons-outlined'"
+            matListItemIcon>
+            {{item.icon}}
+          </mat-icon>
+          <span matListItemTitle *ngIf="!sidenavService.collapsed()">{{item.label}}</span>
+        </a>
+      }
+      
     </mat-nav-list>
   `,
   styles: [
@@ -89,15 +87,8 @@ export type MenuItem = {
   ]
 })
 export class CustomSidenavComponent {
-
-  collapsed = input.required<boolean>(); 
-  menuItems = signal<MenuItem[]>([
-    { icon: 'person', label: 'About', route: '/about' },
-    { icon: 'work', label: 'Projects', route: '/projects' },
-    { icon: 'code', label: 'Skills', route: '/skills' },
-    { icon: 'contact_mail', label: 'Contact', route: '/contact' },
-  ]);
-
-  profilePicSize = computed(() =>  this.collapsed() ? '32' : '100');
+ 
+  sidenavService = inject(SideNavService);
+  profilePicSize = computed(() =>  this.sidenavService.collapsed() ? '32' : '100');
   
 }
