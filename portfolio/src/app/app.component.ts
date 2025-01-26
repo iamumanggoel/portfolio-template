@@ -30,7 +30,7 @@ import { HeaderComponent } from './components/header/header.component';
     }
 
     mat-sidenav-container{
-      height: calc(100vh - 64px);
+      height: calc(100% - 64px);
       mat-sidenav,
       mat-sidenav-content{
         transition: all 500ms ease-in-out;
