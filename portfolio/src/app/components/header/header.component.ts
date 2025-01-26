@@ -21,36 +21,73 @@ import { TitleCasePipe } from '@angular/common';
     TitleCasePipe,
   ],
   template: `
-    <mat-toolbar>
-      <button mat-icon-button (click)="sidenavService.toggleSidenav()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span class="toolbar-title" [routerLink]="['/']">Portfolio</span>
-      <app-custom-search-bar />
-      <button mat-icon-button [mat-menu-trigger-for]="themeMenu">
-        <mat-icon>{{ themeService.selectedTheme()?.icon}}</mat-icon>
-      </button>
-      <mat-menu #themeMenu="matMenu">
-        @for (theme of themeService.getThemes(); track theme.name){
-          <button mat-menu-item (click)="themeService.setTheme(theme.name)">
+    <mat-toolbar class="header-toolbar">
+      <div class="toolbar-left">
+        <button mat-icon-button (click)="sidenavService.toggleSidenav()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span class="toolbar-title" [routerLink]="['/']">Portfolio</span>
+      </div>
+      <div class="toolbar-center">
+      </div>
+      <div class="toolbar-right">
+        <app-custom-search-bar />
+
+        <button mat-icon-button [mat-menu-trigger-for]="themeMenu">
+          <mat-icon>{{ themeService.selectedTheme()?.icon}}</mat-icon>
+        </button>
+        <mat-menu #themeMenu="matMenu">
+          @for(theme of themeService.getThemes(); track theme.name){
+            <button 
+            mat-menu-item 
+            (click)="themeService.setTheme(theme.name)">
             <mat-icon>{{ theme.icon }}</mat-icon>
-            <span>{{ theme.name | titlecase}}</span>
+            <span>{{ theme.name | titlecase }}</span>
           </button>
-        }
-      </mat-menu>
+          }
+          
+        </mat-menu>
+      </div>
     </mat-toolbar>
   `,
   styles: `
     @use '@angular/material' as mat;
-    mat-toolbar{
+
+    mat-toolbar.header-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       position: relative;
       z-index: 5;
       box-shadow: var(--mat-sys-level2);
-      
-      > span {
-        cursor: pointer;
-      }
+      padding: 0 16px;
+      background-color: var(--mat-sys-primary-container);
+    }
 
+    .toolbar-left,
+    .toolbar-center,
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .toolbar-left {
+      gap: 8px;
+    }
+
+    .toolbar-center {
+      flex: 1;
+      justify-content: center;
+    }
+
+    .toolbar-right {
+      gap: 8px;
+    }
+
+    .toolbar-title {
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
     }
   `
 })
