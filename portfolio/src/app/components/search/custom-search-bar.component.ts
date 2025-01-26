@@ -60,17 +60,22 @@ import { SearchOverlayComponent } from './search-overlay.component';
         border: none;
         outline: none;
         background: inherit;
-        min-width: 352px;
+        min-width: 300px;
       }
       &.opened{
         box-shadow: var(--mat-sys-level2);
-        border-radius: 20px 20px 0 0;
+        border-radius: 20px 20px 0 0; 
       }
 
       .close-btn{
         position: absolute;
         right: 8px;
         top: 0;
+      }
+    }
+    @media (max-width: 768px) {
+      .search-bar-container > input {
+        min-width: 200px; 
       }
     }
   

@@ -45,12 +45,19 @@ import { TitleCasePipe } from '@angular/common';
   styles: `
     .overlay-container{
       box-shadow: var(--mat-sys-level2); 
-      min-width: 429px;
+      min-width: 377px;
       background: var(--mat-sys-outline-variant);
       color: var(--mat-sys-on-surface);
       padding: 16px;
       border-radius: 0 0 32px 32px;
     }
+
+    @media (max-width: 768px) {
+      .overlay-container {
+        min-width: 274px; 
+      }
+    }
+
 
     .no-results-message {
       padding: 16px;

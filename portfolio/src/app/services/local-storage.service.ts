@@ -16,12 +16,9 @@ export class LocalStorageService {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
- get<T>(key: StorageKeys, defaultValue?: T): T | null {
+ get<T>(key: StorageKeys): T | null {
    const item = localStorage.getItem(key);
-   if (!item) {
-     return defaultValue !== undefined ? defaultValue : null;
-   }
-   return JSON.parse(item) as T;
+   return item ? JSON.parse(item) as T : null;
  }
 
 

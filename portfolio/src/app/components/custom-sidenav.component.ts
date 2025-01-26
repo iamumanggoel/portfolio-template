@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal, input, computed, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
@@ -62,7 +62,7 @@ import { SideNavService } from '../services/side-nav.service';
       .header-text{
         > h2{
           margin: 0;
-          font-size: 1rem;
+          font-size: var(--mat-sys-headline-large);
           line-height: 1.5rem;
         }
         > p{

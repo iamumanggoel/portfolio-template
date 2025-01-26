@@ -11,7 +11,7 @@ export class SearchBarService {
   router = inject(Router);
   
   overlayOpen = signal<boolean>(false);
-  recentSearches = signal<string[]>(this.storage.get<string[]>(StorageKeys.RECENT_SEARCHES, []) ?? []);
+  recentSearches = signal<string[]>(this.storage.get<string[]>(StorageKeys.RECENT_SEARCHES) ?? []);
   searchTerm = signal<string>("");
   private allPaths: string[] | undefined;
   recommendedRoutes = signal<string[]>([]);
