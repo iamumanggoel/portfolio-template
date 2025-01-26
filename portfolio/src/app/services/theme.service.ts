@@ -1,18 +1,23 @@
 import { Injectable, computed, effect, inject, signal } from '@angular/core';
-import { AppTheme } from '../models/theme.model';
+import { AppTheme, ThemeType, Theme } from '../models/theme.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
 
-  appTheme = signal<'light' | 'dark' | 'system'>('system'); 
-
   themes: AppTheme[] = [
-    { name: 'Light', icon: 'light_mode' },
-    { name: 'Dark', icon: 'dark_mode' },
-    { name: 'System', icon: 'brightness_auto' },
+    { name: Theme.Light, icon: 'light_mode' },
+    { name: Theme.Dark, icon: 'dark_mode' },
+    { name: Theme.System, icon: 'desktop_windows' },
   ];
+  
+
+  appTheme = signal<ThemeType>(Theme.System); 
+
+  selectedTheme = computed(() => {
+    return this.themes.find(theme => theme.name === this.appTheme());
+  });
 
   constructor() { }
 
@@ -20,7 +25,7 @@ export class ThemeService {
     return this.themes;
   }
 
-  setTheme(theme: 'light' | 'dark' | 'system'){
+  setTheme(theme: ThemeType){
     this.appTheme.set(theme);
   }
 }
