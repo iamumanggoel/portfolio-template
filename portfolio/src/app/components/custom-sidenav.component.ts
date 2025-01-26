@@ -32,6 +32,7 @@ import { SideNavService } from '../services/side-nav.service';
         [activated]="rla.isActive">
 
           <mat-icon 
+            [ngStyle]="{'color': rla.isActive ? 'var(--mat-sys-error)' : 'inherit'}"
             [fontSet]="rla.isActive ?
             'material-icons': 'material-icons-outlined'"
             matListItemIcon>
@@ -80,7 +81,7 @@ import { SideNavService } from '../services/side-nav.service';
         border-radius: 0 !important;
       }
       .selected-menu-item {
-        border-left-color: blue;
+        border-left-color: var(--mat-sys-error);
         background-color: rgba(0, 0, 0, 0.05);
       }
     `

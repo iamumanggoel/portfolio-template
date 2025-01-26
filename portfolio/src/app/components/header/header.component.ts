@@ -51,8 +51,6 @@ import { TitleCasePipe } from '@angular/common';
     </mat-toolbar>
   `,
   styles: `
-    @use '@angular/material' as mat;
-
     mat-toolbar.header-toolbar {
       display: flex;
       justify-content: space-between;
@@ -61,7 +59,8 @@ import { TitleCasePipe } from '@angular/common';
       z-index: 5;
       box-shadow: var(--mat-sys-level2);
       padding: 0 16px;
-      background-color: var(--mat-sys-primary-container);
+      background-color: var(--mat-sys-secondary-container);
+      color: var(--mat-sys-on-secondary-container);
     }
 
     .toolbar-left,

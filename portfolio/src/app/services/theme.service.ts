@@ -14,7 +14,7 @@ export class ThemeService {
   ];
   
   storage = inject(LocalStorageService);
-  appTheme = signal<{ name: ThemeType}>(this.storage.get<{ name: ThemeType}>(StorageKeys.THEME) ?? {name: Theme.Light});  
+  appTheme = signal<{ name: ThemeType}>(this.storage.get<{ name: ThemeType}>(StorageKeys.THEME) ?? {name: Theme.Dark});  
 
   selectedTheme = computed(() => {
     return this.themes.find(theme => theme.name === this.appTheme()?.name);

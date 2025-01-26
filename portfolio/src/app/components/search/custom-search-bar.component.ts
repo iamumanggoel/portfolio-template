@@ -15,13 +15,14 @@ import { SearchOverlayComponent } from './search-overlay.component';
       #overlayPosition="cdkOverlayOrigin"
       [ngClass]="{ 'opened': overlayOpen() }">
       <button mat-icon-button>
-        <mat-icon>search</mat-icon>
+        <mat-icon (click)="search(searchInput.value)">search</mat-icon>
       </button>
       <input #searchInput placeholder="Search..." 
         [value]="searchBarService.searchTerm()"
         (click)="overlayOpen.set(true)"
         (keydown.ENTER)="search(searchInput.value)"
         [maxLength]="25"
+        (input)="searchBarService.getFilteredRoutes(searchInput.value)"
       />
 
       @if(searchBarService.searchTerm()){
@@ -63,7 +64,6 @@ import { SearchOverlayComponent } from './search-overlay.component';
       }
       &.opened{
         box-shadow: var(--mat-sys-level2);
-        //background: white;
         border-radius: 20px 20px 0 0;
       }
 
@@ -83,7 +83,7 @@ export class CustomSearchBarComponent {
 
   search(searchTerm: string){
     if(!searchTerm) return;
-    this.searchBarService.search(searchTerm);
+    this.searchBarService.search(searchTerm, 'recent');
   }
 
   clearSearch(){
