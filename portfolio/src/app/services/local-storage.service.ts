@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 
 export enum StorageKeys {
   RECENT_SEARCHES = 'recentSearches',
-  THEME = 'theme'
+  THEME = 'theme',
+  DASHBOARD_WIDGETS = 'dashboardWidgets'
 }
 
 @Injectable({

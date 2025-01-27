@@ -7,6 +7,7 @@ import { MenuItem } from '../models/sidenav.model';
 export class SideNavService {
 
   menuItems = signal<MenuItem[]>([
+      { icon: 'home', label: 'Home', route: '/home'},
       { icon: 'person', label: 'About', route: '/about' },
       { icon: 'business_center', label: 'Projects', route: '/projects' },
       { icon: 'code', label: 'Skills', route: '/skills' },
