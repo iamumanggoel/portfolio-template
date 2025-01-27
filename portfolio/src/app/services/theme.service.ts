@@ -30,6 +30,10 @@ export class ThemeService {
     this.appTheme.set({name: theme});
   }
 
+  getCssVariable(variable: string): string {
+    return getComputedStyle(document.documentElement).getPropertyValue(variable).trim();
+  }
+
   saveLocalStorage = effect(() => {
     this.storage.set<{name: ThemeType}>(StorageKeys.THEME, this.appTheme());
   });

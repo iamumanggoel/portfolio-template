@@ -78,8 +78,8 @@ import { DashboardService } from '../../../services/dashboard.service';
     :host{
       position: absolute;
       z-index: 2;
-      background: var(--mat-sys-surface-container-low); //TODO: make this a variable
-      color: var(--mat-sys-on-surface); //TODO: make this a variable
+      background: var(--mat-sys-surface-container-low); 
+      color: var(--mat-sys-on-surface);
       top: 0;
       left: 0;
       border-radius: inherit;
@@ -126,7 +126,7 @@ import { DashboardService } from '../../../services/dashboard.service';
       position: absolute;
       top: 0;
       left: 0;
-      color: var(--mat-sys-error); //TODO: make this dynamic
+      color: var(--mat-sys-error); 
     }
   `
 })
