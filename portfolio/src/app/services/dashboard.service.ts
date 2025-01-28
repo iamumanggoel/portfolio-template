@@ -1,11 +1,11 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { SubscribersComponent } from '../components/dashboards/widgets/subscribers.component';
 import { Widget } from '../models/dashboard.model';
 import { ViewsComponent } from '../components/dashboards/widgets/views.component';
 import { LocalStorageService, StorageKeys } from './local-storage.service';
 import { LineChartComponent } from '../components/dashboards/widgets/analytics/line-chart.component';
 import { PieChartComponent } from '../components/dashboards/widgets/analytics/pie-chart.component';
 import { DoughnutChartComponent } from '../components/dashboards/widgets/analytics/doughnut-chart.component';
+import { TotalLabelComponent } from '../components/dashboards/widgets/labels/total-label.component';
 
 @Injectable()
 export class DashboardService {
@@ -13,10 +13,10 @@ export class DashboardService {
   widgets = signal<Widget[]>([
     {
       id: 1,
-      label: 'Subscribes',
-      content: SubscribersComponent,
+      label: 'Total Solved',
+      content: TotalLabelComponent,
       rows: 1,
-      columns: 1,
+      columns: 2,
       backgroundColor: 'var(--mat-sys-surface)',
       color: 'var(--mat-sys-on-surface)'
     },
@@ -31,17 +31,17 @@ export class DashboardService {
     },
     {
       id: 3,
-      label: 'Submissions',
-      content: LineChartComponent,
+      label: 'Questions Solved',
+      content: PieChartComponent,
       rows: 2,
-      columns: 2,
+      columns: 3,
       backgroundColor: 'var(--mat-sys-surface)',
       color: 'var(--mat-sys-on-surface)'
     },
     {
       id: 4,
-      label: 'Questions Solved',
-      content: PieChartComponent,
+      label: 'Acceptance Ratio',
+      content: DoughnutChartComponent,
       rows: 2,
       columns: 2,
       backgroundColor: 'var(--mat-sys-surface)',
@@ -49,16 +49,62 @@ export class DashboardService {
     },
     {
       id: 5,
+      label: 'Submissions',
+      content: LineChartComponent,
+      rows: 3,
+      columns: 3,
+      backgroundColor: 'var(--mat-sys-surface)',
+      color: 'var(--mat-sys-on-surface)'
+    },
+  ]);
+
+  addedWidgets = signal<Widget[]>([
+    {
+      id: 1,
+      label: 'Total Solved',
+      content: TotalLabelComponent,
+      rows: 1,
+      columns: 2,
+      backgroundColor: 'var(--mat-sys-surface)',
+      color: 'var(--mat-sys-on-surface)'
+    },
+    {
+      id: 2,
+      label: 'Views',
+      content: ViewsComponent,
+      rows: 1,
+      columns: 1,
+      backgroundColor: 'var(--mat-sys-surface)',
+      color: 'var(--mat-sys-on-surface)'
+    },
+    {
+      id: 3,
+      label: 'Questions Solved',
+      content: PieChartComponent,
+      rows: 2,
+      columns: 3,
+      backgroundColor: 'var(--mat-sys-surface)',
+      color: 'var(--mat-sys-on-surface)'
+    },
+    {
+      id: 4,
       label: 'Acceptance Ratio',
       content: DoughnutChartComponent,
       rows: 2,
       columns: 2,
       backgroundColor: 'var(--mat-sys-surface)',
       color: 'var(--mat-sys-on-surface)'
-    }
+    },
+    {
+      id: 5,
+      label: 'Submissions',
+      content: LineChartComponent,
+      rows: 3,
+      columns: 4,
+      backgroundColor: 'var(--mat-sys-surface)',
+      color: 'var(--mat-sys-on-surface)'
+    },
   ]);
-
-  addedWidgets = signal<Widget[]>([]);
 
 
   widgetsToAdd = computed(() => {
