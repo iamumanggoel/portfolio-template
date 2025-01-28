@@ -13,11 +13,11 @@ export class LocalStorageService {
 
   constructor() { }
 
-  set<T>(key: StorageKeys, value: T): void{
+  set<T>(key: StorageKeys | string, value: T): void{
     localStorage.setItem(key, JSON.stringify(value));
   }
 
- get<T>(key: StorageKeys): T | null {
+ get<T>(key: StorageKeys | string): T | null {
    const item = localStorage.getItem(key);
    return item ? JSON.parse(item) as T : null;
  }

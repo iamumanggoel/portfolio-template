@@ -11,7 +11,7 @@ import { wrapGrid } from 'animate-css-grid';
   providers: [DashboardService],
   template: `
     <div class="header">
-      <h2>Dashboard</h2>
+      <h2>Leetcode Dashboard</h2>
       <button mat-raised-button [mat-menu-trigger-for]="widgetMenu">
         <mat-icon>add_circle</mat-icon>
         Add Widget
@@ -47,6 +47,8 @@ import { wrapGrid } from 'animate-css-grid';
       display: flex;
       justify-content: space-between;
       align-items: center;
+      --mdc-protected-button-container-color: var(--mat-sys-primary);
+      --mdc-protected-button-label-text-color: var(--mat-sys-on-primary);
     }
   `
 })

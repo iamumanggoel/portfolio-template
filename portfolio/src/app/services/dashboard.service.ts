@@ -3,7 +3,9 @@ import { SubscribersComponent } from '../components/dashboards/widgets/subscribe
 import { Widget } from '../models/dashboard.model';
 import { ViewsComponent } from '../components/dashboards/widgets/views.component';
 import { LocalStorageService, StorageKeys } from './local-storage.service';
-import { AnalyticsComponent } from '../components/dashboards/widgets/analytics.component';
+import { LineChartComponent } from '../components/dashboards/widgets/analytics/line-chart.component';
+import { PieChartComponent } from '../components/dashboards/widgets/analytics/pie-chart.component';
+import { DoughnutChartComponent } from '../components/dashboards/widgets/analytics/doughnut-chart.component';
 
 @Injectable()
 export class DashboardService {
@@ -29,8 +31,26 @@ export class DashboardService {
     },
     {
       id: 3,
-      label: 'Analytics',
-      content: AnalyticsComponent,
+      label: 'Submissions',
+      content: LineChartComponent,
+      rows: 2,
+      columns: 2,
+      backgroundColor: 'var(--mat-sys-surface)',
+      color: 'var(--mat-sys-on-surface)'
+    },
+    {
+      id: 4,
+      label: 'Questions Solved',
+      content: PieChartComponent,
+      rows: 2,
+      columns: 2,
+      backgroundColor: 'var(--mat-sys-surface)',
+      color: 'var(--mat-sys-on-surface)'
+    },
+    {
+      id: 5,
+      label: 'Acceptance Ratio',
+      content: DoughnutChartComponent,
       rows: 2,
       columns: 2,
       backgroundColor: 'var(--mat-sys-surface)',
@@ -120,4 +140,45 @@ export class DashboardService {
     });
     this.storage.set<Partial<Widget>[]>(StorageKeys.DASHBOARD_WIDGETS, widgetsWithoutContent);
   });
+}
+
+
+type Cache = { data: any; timestamp: number };
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LeetcodeService {
+
+  private leetcodeStatsbaseUrl = 'https://leetcode-stats-api.herokuapp.com/';
+
+  private cacheValidity = 5 * 60 * 1000; // 5mins local variable validity time
+
+  storage = inject(LocalStorageService); 
+
+  constructor() {}
+
+  async getStats(username: string): Promise<any> {
+    const url = `${this.leetcodeStatsbaseUrl}${username}`;
+
+    const localValue = this.storage.get<Cache>(username);
+    if (localValue && (Date.now() - localValue.timestamp < this.cacheValidity)) {
+      return localValue.data;
+    }
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch LeetCode stats: ${response.statusText}`);
+      }
+      const data = await response.json();
+      this.storage.set<Cache>(username, {data, timestamp: Date.now()});
+
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }
