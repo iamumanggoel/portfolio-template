@@ -13,23 +13,16 @@ import { LeetcodeService } from '../../../../services/dashboard.service';
       <canvas #chart></canvas>
     </div>
 
-    <button mat-raised-button (click)="goToProfile()">
+    <!-- <button mat-raised-button (click)="goToProfile()">
         Go to Profile
-    </button>
+    </button> -->
 
   `,
   styles: `
 
-  :host{
-    > button{
-      margin-top: 1rem;
-    }
-    --mdc-protected-button-container-color: var(--mat-sys-primary);
-      --mdc-protected-button-label-text-color: var(--mat-sys-on-primary);
-  }
 
   .chart-container{
-    height: calc(100% - 100px);
+    height: calc(100% - 10px);
     width: 100%;
   }
   
@@ -37,7 +30,6 @@ import { LeetcodeService } from '../../../../services/dashboard.service';
 })
 export class LineChartComponent implements OnInit, OnDestroy {
   
-  private userName = 'Umang_Goel';
   chart = viewChild.required<ElementRef>('chart');
   private themeService = inject(ThemeService);
   private leetcodeService = inject(LeetcodeService);
@@ -50,7 +42,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
   }
 
   private initializeChart(labels: string[], data: number[]): void {
-    const primaryColor = this.themeService.getCssVariable('--mat-sys-primary-dark');
+    // const primaryColor = this.themeService.getCssVariable('--mat-sys-primary-dark');
     const gridColor = this.themeService.getCssVariable('--mat-sys-outline-variant');
     
     this.chartInstance = new Chart(this.chart().nativeElement, {
@@ -92,7 +84,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
   
   fetchStats(): void {
     this.leetcodeService
-    .getStats(this.userName)
+    .getStats()
     .then((response) => {
       if (response?.submissionCalendar) {
         const labels = Object.keys(response.submissionCalendar).map((timestamp) =>
@@ -117,14 +109,9 @@ export class LineChartComponent implements OnInit, OnDestroy {
   });
 }
 
-  goToProfile(): void {
-    window.open(`https://leetcode.com/u/${this.userName}/`, '_blank'); 
-  }
 
   
   ngOnDestroy(): void {
-    if (this.chart()) {
-      this.chart().nativeElement.remove();
-    }
+    this.chart()?.nativeElement?.remove();
   }
 }

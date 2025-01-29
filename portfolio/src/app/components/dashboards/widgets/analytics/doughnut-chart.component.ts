@@ -31,10 +31,10 @@ export class DoughnutChartComponent implements OnInit, OnDestroy {
 
   async loadChart(): Promise<void> {
     try {
-      const response = await this.leetcodeService.getStats('Umang_Goel');
+      const response = await this.leetcodeService.getStats();
       const { acceptanceRate } = response;
 
-      const acceptedPercentage = acceptanceRate;
+      const acceptedPercentage = acceptanceRate ?? 90;
       const rejectedPercentage = 100 - acceptanceRate;
 
       new Chart(this.chart().nativeElement, {
@@ -66,8 +66,6 @@ export class DoughnutChartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.chart()) {
-      this.chart().nativeElement.remove();
-    }
+    this.chart()?.nativeElement?.remove();
   }
 }

@@ -198,6 +198,7 @@ type Cache = { data: any; timestamp: number };
 export class LeetcodeService {
 
   private leetcodeStatsbaseUrl = 'https://leetcode-stats-api.herokuapp.com/';
+  private userName = 'Umang_Goel';
 
   private cacheValidity = 5 * 60 * 1000; // 5mins local variable validity time
 
@@ -205,7 +206,7 @@ export class LeetcodeService {
 
   constructor() {}
 
-  async getStats(username: string): Promise<any> {
+  async getStats(username: string = this.userName): Promise<any> {
     const url = `${this.leetcodeStatsbaseUrl}${username}`;
 
     const localValue = this.storage.get<Cache>(username);
@@ -226,5 +227,9 @@ export class LeetcodeService {
       console.error(error);
       throw error;
     }
+  }
+
+  goToProfile(user_name: string = this.userName): void {
+    window.open(`https://leetcode.com/u/${user_name}/`, '_blank'); 
   }
 }

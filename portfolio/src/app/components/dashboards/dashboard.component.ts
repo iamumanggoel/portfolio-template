@@ -1,6 +1,6 @@
 import { Component, ElementRef, inject, viewChild } from '@angular/core';
 import { WidgetComponent } from "./widgets/widget.component";
-import { DashboardService } from '../../services/dashboard.service';
+import { DashboardService, LeetcodeService } from '../../services/dashboard.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -12,10 +12,16 @@ import { wrapGrid } from 'animate-css-grid';
   template: `
     <div class="header">
       <h2>Leetcode Dashboard</h2>
-      <button mat-raised-button [mat-menu-trigger-for]="widgetMenu">
-        <mat-icon>add_circle</mat-icon>
-        Add Widget
-      </button>
+      <div>
+        <button class="leetcode-button" mat-raised-button (click)="leetcodeService.goToProfile()">
+          <mat-icon>account_circle</mat-icon>
+          Go to Leetcode
+        </button>
+        <button mat-raised-button [mat-menu-trigger-for]="widgetMenu">
+          <mat-icon>add_circle</mat-icon>
+          Add Widget
+        </button>
+      </div>
 
       <mat-menu #widgetMenu="matMenu">
         @for (widget of store.widgetsToAdd(); track widget.id){
@@ -49,12 +55,18 @@ import { wrapGrid } from 'animate-css-grid';
       align-items: center;
       --mdc-protected-button-container-color: var(--mat-sys-primary);
       --mdc-protected-button-label-text-color: var(--mat-sys-on-primary);
+
+      .leetcode-button{
+        margin-right: 0.5rem;
+        cursor: pointer;
+      }
     }
   `
 })
 export class DashboardComponent {
 
   store = inject(DashboardService);
+  leetcodeService = inject(LeetcodeService);
 
   dashboard = viewChild.required<ElementRef>('dashboard');
 
@@ -62,4 +74,7 @@ export class DashboardComponent {
     wrapGrid(this.dashboard().nativeElement, { duration: 500 }); 
     
   }
+
+
+  
 }

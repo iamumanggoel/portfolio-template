@@ -1,6 +1,5 @@
-import { Component, ElementRef, inject, OnDestroy, OnInit, viewChild, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, OnInit, viewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { ThemeService } from '../../../../services/theme.service';
 import { LeetcodeService } from '../../../../services/dashboard.service';
 
 @Component({
@@ -11,18 +10,11 @@ import { LeetcodeService } from '../../../../services/dashboard.service';
     <div class="chart-container">
       <canvas #chart></canvas>
     </div>
-    <!-- <button (click)="fetchStats()">Refresh Stats</button> -->
   `,
   styles: `
     .chart-container {
       height: calc(100% - 10px);
       width: 100%;
-    }
-    button {
-      margin-top: 1rem;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
     }
   `,
 })
@@ -30,7 +22,6 @@ export class PieChartComponent implements OnInit, OnDestroy {
   chart = viewChild.required<ElementRef>('chart');
 
   private leetcodeService = inject(LeetcodeService);
-  // private themeService = inject(ThemeService);
 
   private chartInstance: Chart | null = null;
 
@@ -74,12 +65,12 @@ export class PieChartComponent implements OnInit, OnDestroy {
 
   fetchStats(): void {
     this.leetcodeService
-      .getStats('Umang_Goel')
+      .getStats()
       .then((response) => {
         if (response) {
-          const easySolved = response.easySolved || 0;
-          const mediumSolved = response.mediumSolved || 0;
-          const hardSolved = response.hardSolved || 0;
+          const easySolved = response?.easySolved ?? 0;
+          const mediumSolved = response?.mediumSolved ?? 0;
+          const hardSolved = response?.hardSolved ?? 0;
 
           const data = [easySolved, mediumSolved, hardSolved];
 
@@ -96,8 +87,6 @@ export class PieChartComponent implements OnInit, OnDestroy {
 
   
   ngOnDestroy(): void {
-    if (this.chart()) {
-      this.chart().nativeElement.remove();
-    }
+    this.chart()?.nativeElement?.remove();
   }
 }
